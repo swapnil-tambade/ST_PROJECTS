@@ -1,0 +1,134 @@
+---*******LOADING DATA FROM GCS BUCKET TO SF TABLE******------
+
+----CREATE DATABASE-----
+create database study_db;
+
+-----CREATE SCHEMA-----
+create schema cricket_data
+
+--ONE MORE SCHEMA CREATED FOR ANOTHER TABLE----
+
+CREATE SCHEMA STUDY_DB.SUPERSTORE_DATA
+
+
+-----CREATING SUPERSTORE_SALES TABLE WITH FIELDS DEFINITIONS-------
+CREATE OR REPLACE TABLE STUDY_DB.SUPERSTORE_DATA.SUPERSTORE_SALES (
+Row_ID	VARCHAR,
+Order_ID	VARCHAR,
+Order_Date	VARCHAR,
+Ship_Date	VARCHAR,
+Ship_Mode	VARCHAR,
+Customer_ID	VARCHAR,
+Customer_Name	VARCHAR,
+Segment	VARCHAR,
+Country	VARCHAR,
+City	VARCHAR,
+State	VARCHAR,
+Postal_Code	VARCHAR,
+Region	VARCHAR,
+Product_ID	VARCHAR,
+Category	VARCHAR,
+Subcategory	VARCHAR,
+Product_Name	VARCHAR,
+Sales	INT,
+Quantity	INT,
+Discount	INT,
+Profit	INT);
+
+-----------CREATING FILE FORMAT FOR CSV FILES LOADING----------- 
+
+CREATE FILE FORMAT st_csv_file_format
+  with 
+  TYPE = CSV 
+  FIELD_DELIMITER =',' 
+  SKIP_HEADER=1
+  FIELD_OPTIONALLY_ENCLOSED_BY='"'
+
+-----CREATING ONE MORE FILE FORMAT WITH MORE PARAMETERS SETTINGS---------
+  
+  CREATE  FILE FORMAT ST_CSV_FF
+	TYPE=CSV
+    SKIP_HEADER=1
+    FIELD_DELIMITER=','
+    TRIM_SPACE=TRUE
+    FIELD_OPTIONALLY_ENCLOSED_BY='"'
+    REPLACE_INVALID_CHARACTERS=TRUE
+    DATE_FORMAT=AUTO
+    TIME_FORMAT=AUTO
+    TIMESTAMP_FORMAT=AUTO; 
+  
+  
+--#creating storage integration with google cloud storage-----
+
+CREATE STORAGE INTEGRATION gcp_st_int
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = 'GCS'
+  ENABLED = TRUE
+  STORAGE_ALLOWED_LOCATIONS = ('gcs://cricket_sample_data');
+
+---DESCRIBE STORAGE INTEGRATION TO SEE HOW IT LOOKS----
+
+DESC STORAGE INTEGRATION gcp_st_int;
+
+---CREATING EXTERNAL STAGE WITH GCS LOCATION---------
+
+CREATE STAGE st_gcs_stage
+  URL = 'gcs://cricket_sample_data'
+  STORAGE_INTEGRATION = gcp_st_int
+  FILE_FORMAT = st_csv_file_format;
+
+----DESCRIBE STAGE------
+desc stage st_gcs_stage
+
+---LIST ALL FILES FROM THIS STAGE-------
+list @st_gcs_stage
+
+---LOADING ACTUAL CSV FILE FROM GCS BUCKET TO SF TABLE-----
+
+copy into STUDY_DB.SUPERSTORE_DATA.SUPERSTORE_SALES
+from @st_gcs_stage
+FILE_FORMAT = 'ST_CSV_FF'
+files=('Sample - Superstore.csv')
+ON_ERROR=ABORT_STATEMENT ;
+
+-----CREATING ONE MORE TABLE TO LOAD ANOTHER FILE FROM GCS BUCKET ------
+
+CREATE or replace TABLE STUDY_DB.SUPERSTORE_DATA.t20_matches (
+match_id	VARCHAR(160),
+series_id	VARCHAR(160),
+match_details	VARCHAR(160),
+result	VARCHAR(160),
+scores	VARCHAR(160),
+date	VARCHAR(160),
+venue	VARCHAR(160),
+round	VARCHAR(160),
+home	VARCHAR(160),
+away	VARCHAR(160),
+winner	VARCHAR(160),
+win_by_runs	VARCHAR(160),
+win_by_wickets	VARCHAR(160),
+balls_remaining	VARCHAR(160),
+innings1	VARCHAR(160),
+innings1_runs	VARCHAR(160),
+innings1_wickets	VARCHAR(160),
+innings1_overs_batted	VARCHAR(160),
+innings1_overs	VARCHAR(160),
+innings2	VARCHAR(160),
+innings2_runs	VARCHAR(160),
+innings2_wickets	VARCHAR(160),
+innings2_overs_batted	VARCHAR(160),
+innings2_overs	VARCHAR(160),
+DL_method VARCHAR(160),
+target VARCHAR(160)
+);
+
+------LOADING FROM EXTERNAL STAGE (GCS TO SF TABLE)-----------
+copy into STUDY_DB.SUPERSTORE_DATA.t20_matches
+from @st_gcs_stage
+FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY='"' SKIP_HEADER=1) 
+--ON_ERROR = SKIP FILE
+files=('t20_matches.csv');
+
+----VIEW DATA FROM LOADED TABLE-----
+select * from STUDY_DB.SUPERSTORE_DATA.T20_MATCHES
+SELECT * FROM STUDY_DB.SUPERSTORE_DATA.SUPERSTORE_SALES
