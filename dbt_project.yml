@@ -42,3 +42,7 @@ models:
       +materialized: table
     superstore:
       +materialized: table
+    customer_rev:
+      +materialized: view
+      +database: SLEEKMART_OMS
+  
