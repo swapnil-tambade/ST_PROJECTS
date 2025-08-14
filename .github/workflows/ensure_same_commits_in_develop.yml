@@ -21,8 +21,7 @@ jobs:
       - name: Get PR commit SHAs
         id: pr_commits
         run: |
-          # Get all commit hashes from the PR
-          COMMITS=$(git rev-list ${{ github.event.pull_request.head.sha }} ^${{ github.event.pull_request.base.sha }})
+          COMMITS=$(git rev-list ${{ github.event.pull_request.head.sha }} ^${{ github.event.pull_request.base.sha }} | tr '\n' ' ')
           echo "commits=$COMMITS" >> $GITHUB_OUTPUT
 
       - name: Verify all commits exist in develop
