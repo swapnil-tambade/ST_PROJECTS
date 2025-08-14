@@ -1,0 +1,42 @@
+name: Ensure Commit in Develop Before Main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-develop-contains-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # fetch full history so we can check commits
+
+      - name: Fetch develop branch
+        run: |
+          git fetch origin develop:develop
+
+      - name: Get PR commit SHAs
+        id: pr_commits
+        run: |
+          # Get all commit hashes from the PR
+          COMMITS=$(git rev-list ${{ github.event.pull_request.head.sha }} ^${{ github.event.pull_request.base.sha }})
+          echo "commits=$COMMITS" >> $GITHUB_OUTPUT
+
+      - name: Verify all commits exist in develop
+        run: |
+          MISSING_COMMITS=0
+          for COMMIT in ${{ steps.pr_commits.outputs.commits }}; do
+            if ! git branch --contains $COMMIT | grep -q "develop"; then
+              echo "❌ Commit $COMMIT is not in develop branch!"
+              MISSING_COMMITS=1
+            fi
+          done
+          if [ "$MISSING_COMMITS" -ne 0 ]; then
+            echo "❌ All commits must be merged into develop first."
+            exit 1
+          else
+            echo "✅ All commits are already in develop."
+          fi
