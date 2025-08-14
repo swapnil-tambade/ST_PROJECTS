@@ -1,0 +1,39 @@
+name: Prevent Branch Creation from Develop
+
+on:
+  create: # Runs when a branch is created
+    branches:
+      - '*'
+
+jobs:
+  block-develop-origin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout new branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Get base branch of new branch
+        run: |
+          NEW_BRANCH=${GITHUB_REF#refs/heads/}
+          echo "New branch: $NEW_BRANCH"
+
+          # Find the commit where new branch diverged from develop
+          BASE_FROM_DEVELOP=$(git merge-base origin/develop origin/$NEW_BRANCH)
+
+          # Find the commit where new branch diverged from main
+          BASE_FROM_MAIN=$(git merge-base origin/main origin/$NEW_BRANCH)
+
+          # Compare with develop HEAD
+          if [ "$BASE_FROM_DEVELOP" = "$(git rev-parse origin/develop)" ] && \
+             [ "$BASE_FROM_MAIN" != "$(git rev-parse origin/main)" ]; then
+            echo "❌ Branch '$NEW_BRANCH' was created from develop. Please branch from main or master."
+            exit 1
+          fi
+
+          echo "✅ Branch '$NEW_BRANCH' is not created from develop."
