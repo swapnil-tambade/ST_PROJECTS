@@ -1,35 +1,32 @@
-name: Prevent Branch Creation from Develop
+name: Prevent PR from Branch Created from Develop
 
 on:
-  create: # Runs when a branch is created
-    branches:
-      - '*'
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  block-develop-origin:
+  check-branch-origin:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout new branch
+      - name: Checkout PR source
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
-      - name: Fetch all branches
-        run: git fetch --all
-
-      - name: Get base branch of new branch
+      - name: Fetch main and develop
         run: |
-          NEW_BRANCH=${GITHUB_REF#refs/heads/}
-          echo "New branch: $NEW_BRANCH"
+          git fetch origin main
+          git fetch origin develop
 
-          # Find the commit where new branch diverged from develop
-          BASE_FROM_DEVELOP=$(git merge-base origin/develop origin/$NEW_BRANCH)
+      - name: Check if branch is from develop
+        run: |
+          NEW_BRANCH=${{ github.head_ref }}
+          echo "Checking branch: $NEW_BRANCH"
 
-          # Find the commit where new branch diverged from main
-          BASE_FROM_MAIN=$(git merge-base origin/main origin/$NEW_BRANCH)
+          BASE_FROM_DEVELOP=$(git merge-base origin/develop HEAD)
+          BASE_FROM_MAIN=$(git merge-base origin/main HEAD)
 
-          # Compare with develop HEAD
           if [ "$BASE_FROM_DEVELOP" = "$(git rev-parse origin/develop)" ] && \
              [ "$BASE_FROM_MAIN" != "$(git rev-parse origin/main)" ]; then
             echo "❌ Branch '$NEW_BRANCH' was created from develop. Please branch from main or master."
