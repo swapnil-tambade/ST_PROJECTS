@@ -1,0 +1,66 @@
+✅ How to run the script
+--Open Command Prompt / Terminal.
+--Connect with SnowSQL and run the script:
+--snowsql -a <account_name> -u <username> -r <role> -w MY_WAREHOUSE -d MY_DATABASE 
+--Replace <account_name> and <username> with your Snowflake credentials.
+--Enter your password (and MFA code if enabled) when prompted.
+--snowsql should be installed on your local machine then only all these commands will work
+
+
+-- ===========================
+-- load_csv_to_snowflake.sql
+-- ==========run below commands in snowflake web UI=================
+
+-- 1️⃣ Use your warehouse, database, and schema
+USE WAREHOUSE MY_WAREHOUSE;
+USE DATABASE MY_DATABASE;
+USE SCHEMA PUBLIC;
+
+-- 2️⃣ Create a demo table (adjust columns as needed)
+CREATE OR REPLACE TABLE ORDERS (
+    ORDER_ID    INTEGER,
+    ORDER_DATE  DATE,
+    CUSTOMER_ID INTEGER,
+    AMOUNT      NUMBER(10,2),
+    STATUS      STRING
+);
+
+-- 3️⃣ Create a CSV file format
+CREATE OR REPLACE FILE FORMAT FF_CSV_STD
+    TYPE = CSV
+    FIELD_DELIMITER = ','
+    SKIP_HEADER = 1
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+    NULL_IF = ('', 'NULL');
+
+-- 4️⃣ Create an internal stage for uploading files
+CREATE OR REPLACE STAGE STG_ORDERS
+    FILE_FORMAT = FF_CSV_STD;
+
+-- 5️⃣ List stage to confirm it's empty
+LIST @STG_ORDERS;
+
+-- 6️⃣ Upload local CSV file to the stage
+-- Replace <LOCAL_FILE_PATH> with the full path to your CSV
+-- Windows example: 'file:///C:/data/orders/orders_2025_08.csv'
+
+**************execute below commands into snowsql CLI**********************************************
+
+PUT 'file://<LOCAL_FILE_PATH>' @STG_ORDERS AUTO_COMPRESS=TRUE OVERWRITE=TRUE;   --(this put file from local machine to internal stage on snowflake)
+
+-- 7️⃣ Verify files in stage
+LIST @STG_ORDERS;
+
+-- 8️⃣ Load data from stage into the table   (THIS CAN BE RUN IN SNOWSQL CLI OR FROM SNOWFLAKE WEB UI )
+COPY INTO ORDERS
+    FROM @STG_ORDERS
+    FILE_FORMAT = (FORMAT_NAME = FF_CSV_STD)
+    ON_ERROR = 'ABORT_STATEMENT'   -- stop on bad rows
+    PURGE = FALSE                   -- keep files in stage
+    FORCE = FALSE;                  -- skip files already loaded
+
+-- 9️⃣ Optional: Preview loaded data (CHECK IF DATA IS CORRECTLY LOADED)
+SELECT * FROM ORDERS LIMIT 10;
+
+**************execute below commands into snowsql CLI**********************************************
+GET @<stage name> file://C:/Users/hp/Downloads;        ----(this command will download all files from internal stage to local machine path )
