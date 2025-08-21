@@ -1,0 +1,10 @@
+sources:
+  - name: orders_project
+    database: dbt_work
+    schema: finance_schema
+
+    tables:
+      - name: customers
+        identifier: customers
+      - name: orders
+        identifier: orders

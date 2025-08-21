@@ -1,0 +1,12 @@
+version: 2
+models:
+  - name: fct_orders
+    description: "Fact table joining orders with customer details."
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
