@@ -1,0 +1,6 @@
+order_id,customer_id,order_date,status,amount
+1001,1,2024-05-01,placed,120.50
+1002,1,2024-05-03,shipped,89.99
+1003,2,2024-05-07,delivered,45.00
+1004,3,2026-01-01,placed,10.00
+1005,99,2024-05-09,unknown,77.77
