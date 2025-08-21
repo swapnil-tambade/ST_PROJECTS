@@ -45,4 +45,9 @@ models:
     customer_rev:
       +materialized: view
       +database: SLEEKMART_OMS
+
+seeds:
+  my_new_project:
+    +schema: seed_schema       # override schema for all seeds
+    +database: DBT_WORK       
   

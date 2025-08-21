@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_customers_seed
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+      - name: email
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_orders_seed
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers_seed')     # FK -> PK test
+              field: customer_id
+
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['placed','shipped','delivered','returned','cancelled']
+              severity: warn               # fail as warning (CI won’t block)
+
+      - name: order_date
+        tests:
+          - not_null
