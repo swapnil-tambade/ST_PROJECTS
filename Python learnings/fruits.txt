@@ -1,0 +1,6 @@
+this is fruits list file:
+mango,
+apple,
+grapes,
+banana,
+orange
