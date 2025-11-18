@@ -13,22 +13,17 @@ default_args={'retries':1, 'retry_delay': timedelta(minutes=5)}
 ) as dag:
 
 
-dbt_deps = BashOperator(
-task_id='dbt_deps',
-bash_command='cd /path/to/ST_PROJECTS/Project1_Retail_Sales_Analytics/dbt && dbt deps'
-)
-
 
 dbt_run = BashOperator(
 task_id='dbt_run',
-bash_command='cd /path/to/ST_PROJECTS/Project1_Retail_Sales_Analytics/dbt && dbt run --profiles-dir ~/.dbt'
+bash_command='cd /path/to/ST_PROJECTS/Project1_Retail_Sales_Analytics/dbt/models && dbt run --profiles-dir ~/.dbt'
 )
 
 
 dbt_test = BashOperator(
 task_id='dbt_test',
-bash_command='cd /path/to/ST_PROJECTS/Project1_Retail_Sales_Analytics/dbt && dbt test --profiles-dir ~/.dbt'
+bash_command='cd /path/to/ST_PROJECTS/Project1_Retail_Sales_Analytics/dbt/models && dbt test --profiles-dir ~/.dbt'
 )
 
 
-dbt_deps >> dbt_run >> dbt_test
+dbt_run >> dbt_test

@@ -1,6 +1,8 @@
 {{ config(
-  materialized='incremental', 
-  unique_key='order_id'
+    database='finance_db',
+    schema='analytic',
+    materialized='incremental', 
+    unique_key='order_id'
   ) }}
 
 with orders as (

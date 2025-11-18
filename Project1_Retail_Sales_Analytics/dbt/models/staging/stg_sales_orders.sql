@@ -1,4 +1,7 @@
-{{ config(materialized='view') }}
+{{ config(
+    database='finance_db',
+    schema='analytic',
+    materialized='view') }}
 
   
 with raw as (

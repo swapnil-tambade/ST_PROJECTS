@@ -1,4 +1,6 @@
 {{ config(
+    database='finance_db',
+    schema='analytic'
   materialized='table'
   ) }}
 
