@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: ecom_dim_customers
+    tests:
+      - unique:
+          column_name: customer_id
+      - not_null:
+          column_name: email
+
+  - name: ecom_fct_orders
+    tests:
+      - relationships:
+          to: ref('ecom_dim_customers')
+          field: customer_id

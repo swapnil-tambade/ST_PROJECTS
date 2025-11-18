@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: ecom_raw_src
+    database: dbt_work
+    schema: ecommerce
+    tables:
+      - name: customers
+      - name: orders
+      - name: payments
+      - name: products
