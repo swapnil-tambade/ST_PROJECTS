@@ -1,1 +1,28 @@
+version: 2
 
+
+sources:
+- name: raw
+tables:
+- name: orders_raw
+
+
+models:
+- name: stg_sales_orders
+description: "Staging model for raw orders"
+columns:
+- name: order_id
+tests: [not_null, unique]
+- name: order_date
+tests: [not_null]
+
+
+- name: int_sales_enriched
+description: "Intermediate enriched sales table"
+
+
+- name: mart_daily_sales
+description: "Daily aggregated sales"
+columns:
+- name: order_date
+tests: [not_null]
