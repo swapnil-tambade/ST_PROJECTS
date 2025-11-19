@@ -45,16 +45,15 @@ models:
     customer_rev:
       +materialized: view
       +database: SLEEKMART_OMS
-  retail_sales:
-    staging:
-      +materialized: view
-    intermediate:
-      +materialized: incremental
-      +incremental_strategy: merge
-    marts:
-      +materialized: table
+    Project1_Retail_Sales_Analytics:
+      staging:
+        +materialized: view
+      intermediate:
+        +materialized: incremental
+        +incremental_strategy: merge
+      marts:
+        +materialized: table
     
-
 seeds:
   my_new_project:
     +schema: seed_schema       # override schema for all seeds
