@@ -14,6 +14,6 @@ quantity::INTEGER as quantity,
 unit_price::FLOAT as unit_price,
 currency,
 region
-from {{ source('raw','orders_raw') }}
+from {{ source('raw','raw_orders_data') }}
 )
 select * from raw;
