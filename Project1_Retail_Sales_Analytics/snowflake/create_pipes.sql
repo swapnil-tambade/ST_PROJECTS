@@ -3,7 +3,7 @@
 --with the help of snowpipe we are loading csv file data(located on external stage) into raw layer SF table
 
 CREATE OR REPLACE PIPE finance_db.raw.orders_data_pipe
-AUTO_INGEST = FALSE
+AUTO_INGEST = TRUE
 AS
 COPY INTO finance_db.raw.raw_orders_data
 FROM @raw.stage.st_gcs_orders_ext_stage
