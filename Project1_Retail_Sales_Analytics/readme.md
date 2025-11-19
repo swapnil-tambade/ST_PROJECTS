@@ -11,8 +11,7 @@ This project demonstrates an end-to-end ELT pipeline for retail sales example.
               │
           RAW Layer (Snowflake)->
               │
-         dbt Transformations
-   (staging → intermediate → marts)->
+         dbt Transformations (staging → intermediate → marts)->
               │
            Airflow DAG->
               │
