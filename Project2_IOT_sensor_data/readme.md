@@ -4,17 +4,17 @@
 ## Developer: Swapnil Tambade (Snowflake+DBT Data Engineer)
 
 ## Highlights
-✔ Real-time ingestion  
+✔ Real-time ingestion with Snowpipe 
 ✔ Snowflake Streams for CDC  
 ✔ Snowflake Tasks for periodic transformation  
 ✔ dbt incremental modeling  
 
 ## Architecture
 
-Local Machine(API download) → JSON → S3/GCS → Snowpipe → Snowflake RAW-->
+            JSON data → S3/GCS → Snowpipe → Snowflake RAW
                   │
-            Stream table detects changes-->
+            Stream table detects changes
                   │
-            Task updates final raw table-->
+            Task updates final raw table
                   │
-           dbt models update upto marts layer
+            dbt models update upto marts layer
