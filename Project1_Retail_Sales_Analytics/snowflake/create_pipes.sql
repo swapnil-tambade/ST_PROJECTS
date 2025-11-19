@@ -6,6 +6,6 @@ CREATE OR REPLACE PIPE finance_db.raw.orders_data_pipe
 AUTO_INGEST = FALSE
 AS
 COPY INTO finance_db.raw.raw_orders_data
-FROM @raw.stage.raw_orders_stg
+FROM @raw.stage.st_gcs_orders_ext_stage
 FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY='"' SKIP_HEADER = 1)
 ON_ERROR = 'CONTINUE';
