@@ -1,4 +1,4 @@
-# Retail Sales Analytics Pipeline (Snowflake + dbt + Airflow)
+# Retail Sales Analytics Pipeline (Snowflake + dbt + Airflow) (Developer: Swapnil Tambade)
 
 
 This project demonstrates an end-to-end ELT pipeline for retail sales example.
