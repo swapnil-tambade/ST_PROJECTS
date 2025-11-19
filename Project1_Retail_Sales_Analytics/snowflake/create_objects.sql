@@ -2,6 +2,9 @@
 
 CREATE OR REPLACE DATABASE finance_db;
 CREATE OR REPLACE SCHEMA finance_db.raw;
+CREATE OR REPLACE SCHEMA finance_db.staging;
+CREATE OR REPLACE SCHEMA finance_db.intermediate;
+CREATE OR REPLACE SCHEMA finance_db.mart;
 CREATE OR REPLACE SCHEMA finance_db.analytic;
 
 -- RAW table for orders
@@ -32,17 +35,4 @@ total_quantity NUMBER
 --giving all PRIVILEGES on database to accountadmin role
 
 GRANT ALL PRIVILEGES ON database finance_db TO ROLE accountadmin;
-
---Createing internal named stage where we will put our raw order csv data file from our local machine
-
-
-CREATE OR REPLACE STAGE finance_db.raw.raw_orders_stg
-FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY='"' SKIP_HEADER = 1);
-
---Now putting raw order data file from local machine  to named internal stage with snowsql PUT commmand
-
-PUT file:///C:/Users/hp/Documents/raw_orders_data.csv @raw_orders_stg;
-
-
-
 

@@ -1,0 +1,12 @@
+-- Snowpipe to load data from S3/GCS bucket to raw SF table(Replace notification settings as required.
+--external stage is already created with GCS/S3 BUCKET location (@raw.stage.raw_orders_stg)
+--with the help of snowpipe we are loading csv file data(located on external stage) into raw layer SF table
+--here AUTO_INGEST = TRUE enables continues data loading as soon as new file is loaded into external stage location
+
+CREATE OR REPLACE PIPE finance_db.raw.orders_data_pipe
+AUTO_INGEST = TRUE
+AS
+COPY INTO finance_db.raw.raw_orders_data
+FROM @raw.stage.st_gcs_orders_ext_stage
+FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY='"' SKIP_HEADER = 1)
+ON_ERROR = 'CONTINUE';

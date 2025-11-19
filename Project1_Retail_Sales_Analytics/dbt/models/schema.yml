@@ -5,7 +5,7 @@ sources:
     database: finance_db
     schema: raw
     tables:
-  - name: orders_raw
+  - name: raw_orders_data
 
 
 models:

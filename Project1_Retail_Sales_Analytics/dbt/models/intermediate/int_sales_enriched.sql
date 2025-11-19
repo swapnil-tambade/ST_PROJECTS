@@ -1,6 +1,6 @@
 {{ config(
     database='finance_db',
-    schema='analytic',
+    schema='intermediate',
     materialized='incremental', 
     unique_key='order_id'
   ) }}
