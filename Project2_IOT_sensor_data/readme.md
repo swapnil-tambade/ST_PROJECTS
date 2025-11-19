@@ -11,10 +11,10 @@
 
 ## Architecture
 
-Local Machine(API download) → JSON → S3/GCS → Snowflake RAW
+Local Machine(API download) → JSON → S3/GCS → Snowflake RAW-->
                   │
-            Stream detects changes
+            Stream detects changes-->
                   │
-               Task runs
+               Task runs-->
                   │
          dbt models update marts
