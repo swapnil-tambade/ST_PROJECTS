@@ -1,0 +1,20 @@
+# IoT Sensor Streaming Pipeline (using Snowflake Streams + Tasks + dbt)
+#Developer: Swapnil Tambade (Snowflake+DBT Data Engineer)
+
+#This project simulates real-time processing of IoT sensor JSON data.
+
+## Highlights
+✔ Real-time ingestion  
+✔ Snowflake Streams for CDC  
+✔ Snowflake Tasks for periodic transformation  
+✔ dbt incremental modeling  
+
+## Architecture
+
+Local Machine(API download) → JSON → S3/GCS → Snowflake RAW
+                  │
+            Stream detects changes
+                  │
+               Task runs
+                  │
+         dbt models update marts
