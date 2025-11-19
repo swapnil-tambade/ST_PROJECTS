@@ -1,6 +1,6 @@
 {{ config(
     database='finance_db',
-    schema='analytic',
+    schema='staging',
     materialized='view') }}
 
   
