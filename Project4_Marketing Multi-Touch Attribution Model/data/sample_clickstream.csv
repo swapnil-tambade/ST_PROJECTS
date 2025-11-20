@@ -1,0 +1,61 @@
+event_id,user_id,event_ts,event_type,page_url,channel
+EVT00001,USR4,2024-01-01 00:27:00,checkout,/product/987,Paid Search
+EVT00002,USR12,2024-01-01 14:38:00,product_view,/cart,Referral
+EVT00003,USR15,2024-01-03 15:35:00,page_view,/product/987,Organic
+EVT00004,USR9,2024-01-05 12:03:00,checkout,/checkout,Paid Search
+EVT00005,USR18,2024-01-04 01:43:00,page_view,/checkout,Social
+EVT00006,USR7,2024-01-03 10:06:00,add_to_cart,/product/987,Referral
+EVT00007,USR2,2024-01-05 11:56:00,page_view,/category/electronics,Organic
+EVT00008,USR16,2024-01-06 09:31:00,purchase,/category/fashion,Referral
+EVT00009,USR10,2024-01-04 11:13:00,page_view,/category/electronics,Organic
+EVT00010,USR5,2024-01-06 02:41:00,checkout,/category/fashion,Paid Search
+EVT00011,USR11,2024-01-03 11:10:00,add_to_cart,/cart,Organic
+EVT00012,USR5,2024-01-05 11:15:00,product_view,/product/987,Referral
+EVT00013,USR17,2024-01-03 00:32:00,page_view,/category/electronics,Email
+EVT00014,USR4,2024-01-06 15:23:00,checkout,/checkout,Paid Search
+EVT00015,USR18,2024-01-04 01:42:00,page_view,/product/987,Organic
+EVT00016,USR14,2024-01-02 13:08:00,product_view,/product/123,Social
+EVT00017,USR1,2024-01-04 04:01:00,page_view,/checkout,Email
+EVT00018,USR7,2024-01-03 22:00:00,add_to_cart,/product/987,Referral
+EVT00019,USR20,2024-01-06 02:15:00,product_view,/category/fashion,Paid Search
+EVT00020,USR11,2024-01-02 07:18:00,page_view,/product/987,Organic
+EVT00021,USR9,2024-01-01 23:55:00,page_view,/category/fashion,Referral
+EVT00022,USR13,2024-01-06 15:43:00,purchase,/checkout,Organic
+EVT00023,USR8,2024-01-04 20:15:00,page_view,/category/fashion,Email
+EVT00024,USR3,2024-01-04 04:31:00,page_view,/category/electronics,Organic
+EVT00025,USR6,2024-01-01 00:21:00,product_view,/product/987,Social
+EVT00026,USR10,2024-01-04 21:48:00,purchase,/checkout,Referral
+EVT00027,USR1,2024-01-05 03:29:00,page_view,/product/123,Paid Search
+EVT00028,USR15,2024-01-03 06:45:00,add_to_cart,/product/123,Organic
+EVT00029,USR20,2024-01-05 10:36:00,page_view,/category/fashion,Referral
+EVT00030,USR8,2024-01-03 09:32:00,product_view,/category/electronics,Paid Search
+EVT00031,USR3,2024-01-06 08:26:00,page_view,/home,Organic
+EVT00032,USR13,2024-01-02 09:07:00,product_view,/category/fashion,Email
+EVT00033,USR17,2024-01-01 02:08:00,page_view,/home,Social
+EVT00034,USR5,2024-01-04 04:58:00,add_to_cart,/product/987,Referral
+EVT00035,USR14,2024-01-05 09:49:00,purchase,/checkout,Organic
+EVT00036,USR12,2024-01-03 16:10:00,page_view,/category/electronics,Social
+EVT00037,USR16,2024-01-05 13:28:00,page_view,/product/123,Email
+EVT00038,USR9,2024-01-02 13:57:00,product_view,/product/987,Paid Search
+EVT00039,USR11,2024-01-06 04:53:00,page_view,/home,Organic
+EVT00040,USR2,2024-01-05 17:27:00,add_to_cart,/product/123,Social
+EVT00041,USR18,2024-01-02 01:06:00,page_view,/category/fashion,Paid Search
+EVT00042,USR7,2024-01-03 09:21:00,product_view,/product/987,Referral
+EVT00043,USR4,2024-01-02 02:25:00,page_view,/home,Email
+EVT00044,USR19,2024-01-06 05:45:00,product_view,/cart,Organic
+EVT00045,USR6,2024-01-03 02:13:00,page_view,/product/987,Paid Search
+EVT00046,USR10,2024-01-03 21:44:00,checkout,/checkout,Referral
+EVT00047,USR15,2024-01-02 23:13:00,page_view,/category/electronics,Organic
+EVT00048,USR13,2024-01-04 17:20:00,add_to_cart,/product/987,Email
+EVT00049,USR1,2024-01-02 22:28:00,page_view,/category/fashion,Social
+EVT00050,USR20,2024-01-05 01:15:00,page_view,/cart,Organic
+EVT00051,USR3,2024-01-06 11:41:00,page_view,/home,Paid Search
+EVT00052,USR8,2024-01-03 19:33:00,page_view,/category/fashion,Organic
+EVT00053,USR17,2024-01-05 09:48:00,add_to_cart,/product/123,Social
+EVT00054,USR2,2024-01-04 11:18:00,page_view,/category/electronics,Referral
+EVT00055,USR11,2024-01-03 14:37:00,product_view,/home,Paid Search
+EVT00056,USR14,2024-01-06 14:39:00,page_view,/checkout,Organic
+EVT00057,USR6,2024-01-02 19:19:00,page_view,/product/987,Referral
+EVT00058,USR9,2024-01-04 22:47:00,add_to_cart,/category/electronics,Organic
+EVT00059,USR5,2024-01-05 08:35:00,purchase,/checkout,Paid Search
+EVT00060,USR12,2024-01-03 11:57:00,page_view,/category/electronics,Social
