@@ -1,3 +1,12 @@
+-- This code implements first-touch and last-touch marketing attribution for users who made a final purchase.
+-- WHAT THIS MODEL IS DOING:
+-- Find each user’s first purchase timestamp
+-- Get all events for that user before the purchase (their “journey”)
+-- Within that journey:
+-- First Touch: first marketing channel they interacted with
+-- Last Touch: marketing channel immediately before purchase
+-- these are channel-level attribution metrics commonly used in marketing analytics.  
+
 {{ config(materialized='table') }}
 -- Simplified attribution example: first-touch and last-touch per user
 conversion
