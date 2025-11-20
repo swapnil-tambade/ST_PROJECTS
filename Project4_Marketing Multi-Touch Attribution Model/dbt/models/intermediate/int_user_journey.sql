@@ -1,4 +1,13 @@
-{{ config(materialized='view') }}
+-- This SQL is computing user sessions.
+-- If a user is inactive for 30 minutes, we mark a session boundary.
+-- What this part does:-- Takes your clickstream events-- Partitions them per user-- Sorts them by event time
+
+{{ config(
+	database='finance_db',
+	schema='staging',
+	materialized='view'
+) }}
+
 with sessions as (
 select
 user_id,
