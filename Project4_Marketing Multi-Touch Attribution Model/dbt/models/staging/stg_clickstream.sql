@@ -1,4 +1,9 @@
-{{ config(materialized='view') }}
+{{ config(
+	database='finance_db',
+	schema='staging',
+	materialized='view'
+) }}
+
 select
 cast(event_id as varchar) as event_id,
 user_id,
