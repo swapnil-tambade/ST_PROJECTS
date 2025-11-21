@@ -8,32 +8,60 @@
 # This ensures your dbt project is clean, valid, and passes basic tests before code is merged.
 
 name: dbt CI
+
 on:
-pull_request:
-paths:
-- 'dbt/**'
-- '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'dbt/**'
+      - '.github/workflows/**'
 
 jobs:
-dbt:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v4
-- name: Set up Python
-uses: actions/setup-python@v4
-with:
-python-version: '3.10'
-- name: Install dependencies
-run: |
-python -m pip install --upgrade pip
-pip install dbt-core dbt-snowflake sqlfluff
-- name: SQLFluff lint
-run: |
-sqlfluff lint dbt || true
-- name: dbt deps
-run: cd dbt && dbt deps --profiles-dir ../profiles
-- name: dbt compile
-run: cd dbt && dbt compile --profiles-dir ../profiles
-- name: dbt test (schema)
-run: cd dbt && dbt test --models tag:schema_test --profiles-dir ../
-profiles || exit 0
+  dbt:
+    runs-on: ubuntu-latest
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }}/profiles
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install dbt-core dbt-snowflake sqlfluff
+
+      - name: Create profiles dir
+        run: mkdir -p profiles
+
+      - name: Write profiles.yml
+        run: |
+          cat > profiles/profiles.yml <<EOF
+          demo_snowflake:
+            target: ci
+            outputs:
+              ci:
+                type: snowflake
+                account: "${{ secrets.SF_ACCOUNT }}"
+                user: "${{ secrets.SF_USER }}"
+                password: "${{ secrets.SF_PASSWORD }}"
+                role: "${{ secrets.SF_ROLE }}"
+                warehouse: "${{ secrets.SF_WAREHOUSE }}"
+                database: "${{ secrets.SF_DATABASE }}"
+                schema: "${{ secrets.SF_SCHEMA }}"
+                threads: 2
+          EOF
+
+      - name: SQLFluff lint
+        run: sqlfluff lint dbt || true
+
+      - name: dbt deps
+        run: cd dbt && dbt deps --profiles-dir ../profiles
+
+      - name: dbt compile
+        run: cd dbt && dbt compile --profiles-dir ../profiles
+
+      - name: dbt test (schema)
+        run: cd dbt && dbt test --profiles-dir ../profiles || true
