@@ -11,4 +11,4 @@ Pipeline:
 3. Run SQLFluff
 4. Deploy on merge
 
-   ##workflow .yml file located in .github/workflows folder
+##workflow .yml file located in .github/workflows folder
