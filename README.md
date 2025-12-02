@@ -20,7 +20,7 @@ Across these projects, you will find:
 - SQL/Python – Data ingestion & automation
 - Airflow – Orchestration
 - GitHub Actions – CI/CD pipelines
-- Visualization Tools – Power BI, Tableau, Sigma, DOMO
+- Visualization Tools – Power BI, Tableau, Sigma Computing, DOMO
 
 ## 🤝 Contributions
 This repository is actively evolving as I build new projects.
