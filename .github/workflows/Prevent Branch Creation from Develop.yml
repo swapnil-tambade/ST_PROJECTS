@@ -21,16 +21,16 @@ jobs:
 
       - name: Check if branch is from develop
         run: |
-          NEW_BRANCH=${{ github.head_ref }}
+          NEW_BRANCH="${{ github.head_ref }}"
           echo "Checking branch: $NEW_BRANCH"
-
+          
           BASE_FROM_DEVELOP=$(git merge-base origin/develop HEAD)
           BASE_FROM_MAIN=$(git merge-base origin/main HEAD)
-
+          
           if [ "$BASE_FROM_DEVELOP" = "$(git rev-parse origin/develop)" ] && \
              [ "$BASE_FROM_MAIN" != "$(git rev-parse origin/main)" ]; then
             echo "❌ Branch '$NEW_BRANCH' was created from develop. Please branch from main or master."
             exit 1
           fi
-
+          
           echo "✅ Branch '$NEW_BRANCH' is not created from develop."
